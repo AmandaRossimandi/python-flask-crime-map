@@ -30,5 +30,25 @@ echo "Open a prompt with 'mysql -p'"
 # Python drivers for MySQL
 pip install --user pymysql
 
+# Clone
+cd /var/www
+git clone https://github.com/kayfay/python-flask-crime-map.git
+cd python-flask-crime-map
+
+# Add credentials
+cat <<EOF > dbconfig.py
+db_user = "root"
+db_password = "NewPassword"
+EOF
+
+# Credit .gitignore
+cat <<EOF > .gitignore
+dbconfig.py
+*.pyc
+EOF
+
+# Run database setup script
+python db_setup.py
+
 # More Stuff...
 
