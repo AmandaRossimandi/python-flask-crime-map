@@ -19,17 +19,16 @@ sudo sed '$d' /etc/mysql/my.cnf
 # sudo /usr/sbin/mysqld --skip-grant-tables --skip-networking &
 # mysql -u root
 # FLUSH PRIVILEGES;
-# update mysql.user set password=password('password") where user='root';
+# UPDATE mysql.user SET plugin='mysql_native_password' WHERE user ='root';
+# UPDATE mysql.user SET password=password('password') WHERE user='root';
 # FLUSH PRIVILEGES;
 # exit
+# sudo kill `pgrep mysql`
 
 # Restart server
 sudo /etc/init.d/mysql restart
 sudo /etc/init.d/mysql stop
 sudo /etc/init.d/mysql start
-
-# Open a prompt
-echo "Open a prompt with 'sudo mysql -u root -ppassword'"
 
 # Install and configure Git, apache, pip
 sudo apt-get install python-pip git apache2 libapache2-mod-wsgi
@@ -57,6 +56,16 @@ EOF
 
 # Run database setup script
 python db_setup.py
+
+# Open a prompt
+echo "Open a prompt with 'mysql -u root -ppassword'"
+echo "---------------------------------------------"
+echo "set database with 'USE crimemap;'"
+echo "view tables 'SHOW TABLES FROM crimemap;'"
+echo "view description 'DESCRIBE crimes;'"
+echo "insert data with 'INSERT into crimes (description) VALUES ('arbitraryData');'"
+echo "read data with 'SELECT description FROM crimes;'"
+echo "delete data with 'DELETE FROM crimes';"
 
 # More Stuff...
 
