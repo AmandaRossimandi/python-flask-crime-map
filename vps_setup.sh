@@ -57,7 +57,7 @@ EOF
 # Run database setup script
 python db_setup.py
 
-# Open a prompt
+# Open a prompt and issue test commands
 echo "Open a prompt with 'mysql -u root -ppassword'"
 echo "---------------------------------------------"
 echo "set database with 'USE crimemap;'"
@@ -67,5 +67,38 @@ echo "insert data with 'INSERT into crimes (description) VALUES ('arbitraryData'
 echo "read data with 'SELECT description FROM crimes;'"
 echo "delete data with 'DELETE FROM crimes';"
 
-# More Stuff...
+# Pull fresh from repo
+git pull origin master
 
+# Create .wsgi file
+cat <<EOF > crimemap.wsgi
+import sys
+sys.path.insert(0, "/var/www/crimemap")
+from crimemap import app as application
+EOF
+
+# Create Apache Configuration file
+cd /etc/apache2/sites-available
+cat <<EOF > crimemap.conf
+<VirtualHost *>
+	ServerName example.com
+
+	WSGIScriptAlias / /var/www/python-flask-crime-map/crimemap.wsgi
+	WSGIDaemonProcess crimemap
+	<Directory /var/www/crimemap>
+		WSGIProcessGroup crimemap
+		WSGIApplicationGroup %{GLOBAL}
+			Order deny,allow
+			Allow from all
+	</Directory>
+</VirtualHost>
+EOF
+
+# Deactivate old conf and Activate new conf
+# sudo a2dissite headlines.conf # skip if using new environment
+sudo a2dissite 000-default.conf # if using new environment
+sudo a2ensite crimemap.conf
+sudo systemctl reload apache2
+
+# monitor for error messages
+sudo tail -f /var/log/apache2/error.log
