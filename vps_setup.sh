@@ -34,16 +34,18 @@ sudo /etc/init.d/mysql start
 sudo apt-get install python-pip git apache2 libapache2-mod-wsgi
 sudo chown -R $USER /var/www
 
-# Python drivers for MySQL
-pip install --user pymysql
+# Python drivers for MySQLA, flask
+pip install --user -r dependencies.txt
 
 # Clone Repo
 cd /var/www
 git clone https://github.com/kayfay/python-flask-crime-map.git
 cd python-flask-crime-map
 
-# Add credentials
+# Add credentials and a test flag for the VPS
+# and test = True for local testing
 cat <<EOF > dbconfig.py
+test = False
 db_user = "root"
 db_password = "password"
 EOF
@@ -84,7 +86,7 @@ cat <<EOF > crimemap.conf
 	ServerName example.com
 
 	WSGIScriptAlias / /var/www/python-flask-crime-map/crimemap.wsgi
-	WSGIDaemonProcess crimemap
+	WSGIDaemonProcess crimemap user=user
 	<Directory /var/www/crimemap>
 		WSGIProcessGroup crimemap
 		WSGIApplicationGroup %{GLOBAL}
@@ -93,6 +95,10 @@ cat <<EOF > crimemap.conf
 	</Directory>
 </VirtualHost>
 EOF
+
+# Create a CSS directory and css style file
+mkdir -p static/css
+touch static/css/style.css
 
 # Deactivate old conf and Activate new conf
 # sudo a2dissite headlines.conf # skip if using new environment

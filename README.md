@@ -1,7 +1,17 @@
 # Crime reporting database
 
-A database application using flask webservice and a MySQL db for 
-geographically mapping crime events.
+A database application using flask webservice and a MySQL database for 
+geographically mapping crime events, with a frontend/backend programmed from scratch.
+
+Google maps API, application programming interface, is used to embed a map widget and a 
+categories, date, description, longitude and latitude submission form.
+
+
+### Files
+1. `crimemap.py` contains flask app
+2. `templates/home.html` contains html for page
+3. `static/css/style.css` contains style encodings
+
 
 ### Table Description
 
