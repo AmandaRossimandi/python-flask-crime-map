@@ -1,11 +1,10 @@
 """
 HTML backend code for a crime reporting database app.
 """
-import dbconfig
 from flask import Flask
 from flask import render_template
 from flask import request
-
+import dbconfig
 if dbconfig.test:
     from mockdbhelper import MockDBHelper as DBHelper
 else:
@@ -23,25 +22,6 @@ def home():
         print e
         data = None
     return render_template("home.html", data=data)
-
-
-@app.route("/add", methods=["POST"])
-def add():
-    try:
-        data = request.form.get("userinput")
-        DB.add_input(data)
-    except Exception as e:
-        print e
-    return home()
-
-
-@app.route("/clear")
-def clear():
-    try:
-        DB.clear_all()
-    except Exception as e:
-        print e
-    return home()
 
 
 @app.route("/submitcrime", methods=['POST'])
