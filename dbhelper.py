@@ -39,7 +39,7 @@ class DBHelper:
         finally:
             connection.close()
 
-    def get_all_crimes():
+    def get_all_crimes(self):
         connection = self.connect()
         try:
             query = "SELECT latitude, longitude, date, category, description FROM crimes;"
