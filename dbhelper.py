@@ -47,7 +47,7 @@ class DBHelper:
                 cursor.execute(query)
             named_crimes = []
             for crime in cursor:
-                named_crimes = {
+                named_crime = {
                     'latitude': crime[0],
                     'longitude': crime[1],
                     'date': datetime.datetime.strftime(crime[2],
