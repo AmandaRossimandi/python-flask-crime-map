@@ -11,6 +11,7 @@ categories, date, description, longitude and latitude submission form.
 1. `crimemap.py` contains flask app
 2. `templates/home.html` contains html for page
 3. `static/css/style.css` contains style encodings
+4. `vps_setup.sh` contains shell commands for setting up sql, the server, and flask
 
 
 ### Table Description
