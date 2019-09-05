@@ -12,6 +12,8 @@ categories, date, description, longitude and latitude submission form.
 2. `templates/home.html` contains html for page
 3. `static/css/style.css` contains style encodings
 4. `vps_setup.sh` contains shell commands for setting up sql, the server, and flask
+5. `dbhelper.py` contains the webapp sql object
+6. `mockdbhelper.py` is used to local testing
 
 
 ### Table Description
